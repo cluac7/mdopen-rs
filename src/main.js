@@ -1,7 +1,8 @@
 const { invoke } = window.__TAURI__.tauri;
 const { getMatches } = window.__TAURI__.cli;
 
-let mdcontent = document.getElementsByClassName(".mdcontent");
+let mdcontent = document.getElementById("mdcontent");
+
 getMatches().then((matches) => {
   let sourcepath = matches.args.sourcepath.value;
   console.log(sourcepath);
