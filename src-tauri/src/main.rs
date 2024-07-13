@@ -36,9 +36,24 @@ fn parse_file(path: String) -> String {
                     *hash = &"";
                 }
             }
-            Some(&mut "##") => line_modifier = "h2".into(),
-            Some(&mut "###") => line_modifier = "h3".into(),
-            Some(&mut ">") => line_modifier = "blockquote".into(),
+            Some(&mut "##") => {
+                line_modifier = "h2".into();
+                if let Some(hash) = words.peek_mut() {
+                    *hash = &"";
+                }
+            }
+            Some(&mut "###") => {
+                line_modifier = "h3".into();
+                if let Some(hash) = words.peek_mut() {
+                    *hash = &"";
+                }
+            }
+            Some(&mut ">") => {
+                line_modifier = "blockquote".into();
+                if let Some(quote) = words.peek_mut() {
+                    *quote = &"";
+                }
+            }
             Some(&mut &_) => (),
             None => (),
         }
@@ -46,27 +61,34 @@ fn parse_file(path: String) -> String {
         // parse inline commands
         let mut parsed_words = String::new();
         for word in words {
-            let mut parsed_word = String::new();
+            let parsed_word = String::new();
             if word.len() <= 2 {
                 parsed_words += &word;
+                parsed_words += " ";
+                continue;
+            }
+            if word == "---" {
+                parsed_words += "<hr />";
                 continue;
             }
             let mut word_modifier = String::new();
-            match &word[0..=1] {
-                "**" => word_modifier = "strong".into(),
-                "__" => word_modifier = "strong".into(),
-                "*" => word_modifier = "i".into(),
-                "_" => word_modifier = "i".into(),
-                &_ => word_modifier = "".into(),
+            if &word[0..=1] == "**" || &word[0..=1] == "__" {
+                word_modifier = "strong".into();
+            } else {
+                if word.starts_with("*") || word.starts_with("_") {
+                    word_modifier = "i".into();
+                } else if word.starts_with("`") {
+                    word_modifier = "code".into();
+                }
             }
-            let mut parsed_word = word.to_string();
-            if word_modifier.is_empty() {
-                let parsed_word = format!("<{}>{}</{}>", &word_modifier, word, &word_modifier);
+            let mut parsed_word: String = word.to_string();
+            if !word_modifier.is_empty() && word_modifier != "" {
+                parsed_word = format!("<{}>{}</{}>", &word_modifier, word, &word_modifier);
             }
             parsed_words += &parsed_word;
-            println!("{}", parsed_word);
+            parsed_words += " ";
         }
-        let parsed_line = format!("<{}>{}</{}> ", &line_modifier, parsed_words, &line_modifier);
+        let parsed_line = format!("<{}>{}</{}>", &line_modifier, parsed_words, &line_modifier);
         parsed_string += &parsed_line;
     }
     parsed_string
@@ -78,7 +100,7 @@ fn main() {
             match app.get_cli_matches() {
                 Ok(matches) => {
                     if let Some(sourcepath_argdata) = matches.args.get("sourcepath") {
-                        print!("{:?}", sourcepath_argdata);
+                        println!("{:?}", sourcepath_argdata);
                     } else {
                         panic!("Executable arguments not found");
                     }

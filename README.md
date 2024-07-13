@@ -1,17 +1,17 @@
 # mdopen-rs
-A CommonMark compliant (hopefully) markdown previewer written in Rust using Tauri and *pure* **vanilla** js so it can be speedy.
+A WIP CommonMark compliant (partially) markdown previewer written in Rust using Tauri and *pure* **vanilla** js so it can be speedy.
 
 ## Features
 - [x] Open markdown files
 - [x] Read off content
 - [x] Render markdown titles
-- [ ] Render markdown italics
-- [ ] Render markdown bold
+- [x] Render markdown italics
+- [x] Render markdown bold
 - [x] Render markdown blockquotes
 - [ ] Render markdown unordered lists
 - [ ] Render markdown ordered lists
 - [ ] Render markdown code blocks
-- [ ] Render markdown inline code
+- [x] Render markdown inline code
 - [ ] Render markdown horizontal rules
 - [ ] Render markdown links
 - [ ] Render markdown images
