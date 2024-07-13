@@ -4,10 +4,10 @@ A CommonMark compliant (hopefully) markdown previewer written in Rust using Taur
 ## Features
 - [x] Open markdown files
 - [x] Read off content
-- [ ] Render markdown titles
+- [x] Render markdown titles
 - [ ] Render markdown italics
 - [ ] Render markdown bold
-- [ ] Render markdown blockquotes
+- [x] Render markdown blockquotes
 - [ ] Render markdown unordered lists
 - [ ] Render markdown ordered lists
 - [ ] Render markdown code blocks

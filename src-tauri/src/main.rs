@@ -26,6 +26,7 @@ fn parse_file(path: String) -> String {
     for line in reader.lines() {
         let line = line.unwrap_or("".into());
         let mut words = line.split_whitespace().peekable();
+
         // parse line modifiers
         let mut line_modifier = String::from("div");
         match words.peek_mut() {
@@ -38,21 +39,27 @@ fn parse_file(path: String) -> String {
             Some(&mut "##") => line_modifier = "h2".into(),
             Some(&mut "###") => line_modifier = "h3".into(),
             Some(&mut ">") => line_modifier = "blockquote".into(),
-            Some(&mut "---") => {
-                if let Some(hr) = words.peek_mut() {
-                    *hr = "<hr />";
-                }
-            }
             Some(&mut &_) => (),
             None => (),
         }
 
-        // // parse inline commands
-        // for word in words {
-        //     match word {
-
-        //     }
-        // }
+        // parse inline commands
+        for word in &mut words {
+            if word.len() <= 2 {
+                continue;
+            }
+            let mut word_modifier = String::new();
+            match &word[0..=1] {
+                "**" => word_modifier = "strong".into(),
+                "__" => word_modifier = "strong".into(),
+                "*" => word_modifier = "i".into(),
+                "_" => word_modifier = "i".into(),
+                &_ => word_modifier = "".into(),
+            }
+            if !word_modifier.is_empty() {
+                *word = &format!("<{}>{}</{}>", &word_modifier, word, &word_modifier);
+            }
+        }
         let parsed_line = format!("<{}>{}</{}>", &line_modifier, line, &line_modifier);
         parsed_string += &parsed_line;
     }
