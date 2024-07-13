@@ -29,11 +29,20 @@ fn parse_file(path: String) -> String {
         // parse line modifiers
         let mut line_modifier = String::from("div");
         match words.peek_mut() {
-            Some(&mut "#") => line_modifier = "h1".into(),
+            Some(&mut "#") => {
+                line_modifier = "h1".into();
+                if let Some(hash) = words.peek_mut() {
+                    *hash = &"";
+                }
+            }
             Some(&mut "##") => line_modifier = "h2".into(),
             Some(&mut "###") => line_modifier = "h3".into(),
             Some(&mut ">") => line_modifier = "blockquote".into(),
-            Some(&mut "---") => *words.peek_mut().unwrap() = &mut "<hr>",
+            Some(&mut "---") => {
+                if let Some(hr) = words.peek_mut() {
+                    *hr = "<hr />";
+                }
+            }
             Some(&mut &_) => (),
             None => (),
         }
