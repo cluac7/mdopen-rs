@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::fs::File;
-use std::io::prelude::*;
+use std::io::{self, prelude::*, BufReader}
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 // #[tauri::command]
@@ -16,6 +16,19 @@ fn open_file(path: String) -> String {
     let mut s = String::new();
     file.read_to_string(&mut s).expect("Couldn't read file");
     s
+}
+
+#[tauri::command]
+fn parse_file(path: String) -> String {
+    let file = File::open(&path).expect("Couldn't open file");
+    let mut parsed_string = String::new();
+    let reader = BufReader::new(file);
+    for line in reader.lines() {
+        for word in line.unwrap_or("".into()).split_whitespace() {
+
+        }
+    }
+    parsed_string
 }
 
 fn main() {
@@ -35,7 +48,7 @@ fn main() {
             };
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![open_file])
+        .invoke_handler(tauri::generate_handler![open_file, parse_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
