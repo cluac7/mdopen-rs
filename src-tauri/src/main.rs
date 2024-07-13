@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::fs::File;
-use std::io::{self, prelude::*, BufReader}
+use std::io::{prelude::*, BufReader};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 // #[tauri::command]
@@ -24,9 +24,25 @@ fn parse_file(path: String) -> String {
     let mut parsed_string = String::new();
     let reader = BufReader::new(file);
     for line in reader.lines() {
-        for word in line.unwrap_or("".into()).split_whitespace() {
-
+        let words = line.unwrap_or("".into()).split_whitespace().peekable();
+        // parse line modifiers
+        let mut line_modifier = String::new();
+        match words.peek() {
+            Some(&"#") => line_modifier = "h1".into(),
+            Some(&"##") => line_modifier = "h2".into(),
+            Some(&"###") => line_modifier = "h3".into(),
+            Some(&">") => line_modifier = "blockquote".into(),
+            Some(&"#") => line_modifier = "h1".into(),
+            Some(&&_) => (),
+            None => (),
         }
+
+        // // parse inline commands
+        // for word in words {
+        //     match word {
+
+        //     }
+        // }
     }
     parsed_string
 }
