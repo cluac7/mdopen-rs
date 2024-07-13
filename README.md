@@ -2,7 +2,7 @@
 A markdown previewer written in Rust using Tauri.
 
 ## Features
-- [ ] Open markdown files
+- [x] Open markdown files
 - [ ] Read off content
 - [ ] Render markdown titles
 - [ ] Render markdown links

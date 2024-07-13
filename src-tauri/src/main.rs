@@ -12,15 +12,10 @@ use std::io::prelude::*;
 
 #[tauri::command]
 fn open_file(path: String) -> String {
-    let mut file = match File::open(&path) {
-        Ok(file) => file,
-        Err(error) => panic!("Unable to open {}: {}", &path, error),
-    };
+    let mut file = File::open(&path).expect("Couldn't open file");
     let mut s = String::new();
-    match file.read_to_string(&mut s) {
-        Err(why) => panic!("couldn't read {}: {}", &path, why),
-        Ok(_) => s,
-    }
+    file.read_to_string(&mut s).expect("Couldn't read file");
+    s
 }
 
 fn main() {
