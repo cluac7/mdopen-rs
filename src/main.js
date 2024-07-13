@@ -5,8 +5,9 @@ let mdcontent = document.getElementById("mdcontent");
 
 getMatches().then((matches) => {
   let sourcepath = matches.args.sourcepath.value;
-  console.log(sourcepath);
-  mdcontent.textContent = sourcepath;
+  invoke("open_file", { path: sourcepath }).then(
+    (contents) => (mdcontent.textContent = contents),
+  );
 });
 
 // async function greet() {
