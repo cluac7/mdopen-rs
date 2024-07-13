@@ -44,8 +44,11 @@ fn parse_file(path: String) -> String {
         }
 
         // parse inline commands
-        for word in &mut words {
+        let mut parsed_words = String::new();
+        for word in words {
+            let mut parsed_word = String::new();
             if word.len() <= 2 {
+                parsed_words += &word;
                 continue;
             }
             let mut word_modifier = String::new();
@@ -56,11 +59,14 @@ fn parse_file(path: String) -> String {
                 "_" => word_modifier = "i".into(),
                 &_ => word_modifier = "".into(),
             }
-            if !word_modifier.is_empty() {
-                *word = &format!("<{}>{}</{}>", &word_modifier, word, &word_modifier);
+            let mut parsed_word = word.to_string();
+            if word_modifier.is_empty() {
+                let parsed_word = format!("<{}>{}</{}>", &word_modifier, word, &word_modifier);
             }
+            parsed_words += &parsed_word;
+            println!("{}", parsed_word);
         }
-        let parsed_line = format!("<{}>{}</{}>", &line_modifier, line, &line_modifier);
+        let parsed_line = format!("<{}>{}</{}> ", &line_modifier, parsed_words, &line_modifier);
         parsed_string += &parsed_line;
     }
     parsed_string
