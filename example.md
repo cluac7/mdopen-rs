@@ -1,7 +1,24 @@
-# Tauri + Vanilla
+# An example
+> for testing the markdown viewer
+Some normal text
+Some *not* **so** `normal` text
 
-This template should help get you started developing with Tauri in vanilla HTML, CSS and Javascript.
+- and a list
+- of things
+- i want to do
 
-## Recommended IDE Setup
+1. order them
+2. damn ordered lists are annoying
+3. i'll figure it out
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+---
+
+```rust
+fn main() {
+    println!("This is actually written in rust!");
+}
+```
+
+
+## Another section
+the repo for this is [here](https://github.com/cluac7/mdopen-rs)

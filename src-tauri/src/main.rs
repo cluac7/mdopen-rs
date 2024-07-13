@@ -24,16 +24,17 @@ fn parse_file(path: String) -> String {
     let mut parsed_string = String::new();
     let reader = BufReader::new(file);
     for line in reader.lines() {
-        let words = line.unwrap_or("".into()).split_whitespace().peekable();
+        let line = line.unwrap_or("".into());
+        let mut words = line.split_whitespace().peekable();
         // parse line modifiers
-        let mut line_modifier = String::new();
-        match words.peek() {
-            Some(&"#") => line_modifier = "h1".into(),
-            Some(&"##") => line_modifier = "h2".into(),
-            Some(&"###") => line_modifier = "h3".into(),
-            Some(&">") => line_modifier = "blockquote".into(),
-            Some(&"#") => line_modifier = "h1".into(),
-            Some(&&_) => (),
+        let mut line_modifier = String::from("div");
+        match words.peek_mut() {
+            Some(&mut "#") => line_modifier = "h1".into(),
+            Some(&mut "##") => line_modifier = "h2".into(),
+            Some(&mut "###") => line_modifier = "h3".into(),
+            Some(&mut ">") => line_modifier = "blockquote".into(),
+            Some(&mut "---") => *words.peek_mut().unwrap() = &mut "<hr>",
+            Some(&mut &_) => (),
             None => (),
         }
 
@@ -43,6 +44,8 @@ fn parse_file(path: String) -> String {
 
         //     }
         // }
+        let parsed_line = format!("<{}>{}</{}>", &line_modifier, line, &line_modifier);
+        parsed_string += &parsed_line;
     }
     parsed_string
 }
