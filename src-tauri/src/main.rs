@@ -9,6 +9,17 @@
 
 fn main() {
     tauri::Builder::default()
+        .setup(|app| {
+            match app.get_cli_matches() {
+                Ok(matches) => {
+                    println!("matches: {:?}", matches);
+                }
+                Err(_) => {
+                    panic!("No file parsed in!");
+                }
+            };
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
