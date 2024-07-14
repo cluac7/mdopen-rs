@@ -42,13 +42,13 @@ jobs:
         with:
           tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
           releaseName: "App v__VERSION__"
-          releaseBody: "THESE ASSETS ARE PRE-RELEASE AND LIKELY UNTESTED
-            What to download:
-            - Debian-based - .deb
-            - Red Hat-based - .rpm
-            - Windows - setup.exe or msi (exe preferred)
-            - MacOS M series - aarch64.dmg or aarch64.app.tar.gz
-            - MacOS Intel series - x64.dmg or x64.app.tar.gz
+          releaseBody: "THESE ASSETS ARE PRE-RELEASE AND LIKELY UNTESTED\n
+            What to download:\n
+            - Debian-based - .deb\n
+            - Red Hat-based - .rpm\n
+            - Windows - setup.exe or msi (exe preferred)\n
+            - MacOS M series - aarch64.dmg or aarch64.app.tar.gz\n
+            - MacOS Intel series - x64.dmg or x64.app.tar.gz\n
             - Generic Linux (unpreferred) - .AppImage"
           releaseDraft: true
           prerelease: true
