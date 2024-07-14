@@ -4,11 +4,7 @@
 use std::fs::File;
 use std::io::{prelude::*, BufReader};
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-// #[tauri::command]
-// fn greet(name: &str) -> String {
-//     format!("Hello, {}! You've been greeted from Rust!", name)
-// }
+use regex::Regex;
 
 #[tauri::command]
 fn open_file(path: String) -> String {
@@ -54,6 +50,9 @@ fn parse_file(path: String) -> String {
                     *quote = &"";
                 }
             }
+            Some(&mut "-") => {
+                line_modifier = "ul".into();
+            }
             Some(&mut &_) => (),
             None => (),
         }
@@ -79,6 +78,7 @@ fn parse_file(path: String) -> String {
                     word_modifier = "i".into();
                 } else if word.starts_with("`") {
                     word_modifier = "code".into();
+                }
                 }
             }
             let mut parsed_word: String = word.to_string();

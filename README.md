@@ -8,11 +8,11 @@ A WIP CommonMark compliant (partially) markdown previewer written in Rust using 
 - [x] Render markdown italics
 - [x] Render markdown bold
 - [x] Render markdown blockquotes
-- [ ] Render markdown unordered lists
+- [x] Render markdown unordered lists
 - [ ] Render markdown ordered lists
 - [ ] Render markdown code blocks
 - [x] Render markdown inline code
-- [ ] Render markdown horizontal rules
+- [x] Render markdown horizontal rules
 - [ ] Render markdown links
 - [ ] Render markdown images
 
