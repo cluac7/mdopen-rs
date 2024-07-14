@@ -13,7 +13,7 @@ A WIP CommonMark compliant (partially) markdown previewer written in Rust using 
 - [ ] Render markdown code blocks
 - [x] Render markdown inline code
 - [x] Render markdown horizontal rules
-- [ ] Render markdown links
+- [x] Render markdown links
 - [ ] Render markdown images
 
 ## Contributing

@@ -78,7 +78,9 @@ fn parse_file(path: String) -> String {
                     word_modifier = "i".into();
                 } else if word.starts_with("`") {
                     word_modifier = "code".into();
-                }
+                } else if word.starts_with("[") && word.ends_with(")") {
+                    parsed_words += &parse_link(&word);
+                    continue;
                 }
             }
             let mut parsed_word: String = word.to_string();
@@ -114,4 +116,16 @@ fn main() {
         .invoke_handler(tauri::generate_handler![open_file, parse_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+}
+
+fn parse_link(raw_link: &str) -> String {
+    // let re = Regex::new(r"\[([^][]+)\](\(((?:[^()]+|(?2))+)\))").unwrap();
+    let re = Regex::new(r"(?:\[(?P<text>.*?)\])\((?P<link>.*?)\)").unwrap();
+    let mut parsed_link = String::new();
+
+    for (_, [text, link]) in re.captures_iter(raw_link).map(|c| c.extract()) {
+        parsed_link = format!("<a href=\"{}\">{}</a>", link, text);
+    }
+
+    parsed_link
 }
