@@ -16,6 +16,11 @@ A WIP CommonMark compliant (partially) markdown previewer written in Rust using 
 - [x] Render markdown links
 - [ ] Render markdown images
 
+## Supports
+- [ ] Windows (ready but untested)
+- [ ] MacOS (ready but untested)
+- [x] Linux
+
 ## Contributing
 1. Follow the install instruction instructions for [tauri](tauri.app)
 2. Clone and `cd mdopen-rs`
